@@ -1,0 +1,22 @@
+                   
+Registros almacenados:
+  No.    Matricula   Nombre                         Apellido Pat.     Apellido Mat.     Edad    Sexo   
+  1      200041      CAROLINA                       BARRIOS           SANCHEZ           25     MUJER   
+  2      211478      CARLOS_ANDRES                  SANCHEZ           VILLEGAS          23     HOMBRE  
+  3      209961      ANA                            GONZALEZ          CHAVEZ            26     MUJER   
+  4      214604      DAVID_CARLOS                   RODRIGUEZ         CHAVEZ            28     HOMBRE  
+  5      219895      CLARA                          HERRERA           SANCHEZ           27     MUJER   
+  6      225667      CAROLINA                       PEREZ             MORALES           23     MUJER   
+  7      230333      LAURA                          JIMENEZ           OROZCO            22     MUJER   
+  8      225547      CARLOS                         CASTRO            GUERRERO          18     HOMBRE  
+  9      209741      IRENE                          LOZANO            CASTILLO          30     MUJER   
+  10     201842      ALEJANDRO_CARLOS               MARTINEZ          DELGADO           21     HOMBRE  
+  11     223805      ADAN_JORGE                     FERNANDEZ         VILLEGAS          23     HOMBRE  
+  12     203548      SOFIA                          SOTO              CHAVEZ            28     MUJER   
+  13     204966      GABRIEL_JAVIER                 GARCIA            MOLINA            18     HOMBRE  
+  14     205537      ANTONIO_ADAN                   RODRIGUEZ         OROZCO            24     HOMBRE  
+  15     204639      JAVIER_SERGIO                  FERNANDEZ         OROZCO            18     HOMBRE  
+  16     205021      ROSA                           MARTIN            SANCHEZ           28     MUJER   
+  18     222355      CAROLINA                       JIMENEZ           ROMERO            29     MUJER   
+  19     201150      MARTA                          MARTIN            SALAZAR           23     MUJER   
+  20     218007      PAULA                          DIAZ              PALACIOS          26     MUJER   

@@ -1,5 +1,7 @@
+// RiosRodriguezDaniel 372800
+// 10-nov-23
 /*
- MENÚ
+MENÚ
 1.- Cargar Archivo
 2.- Agregar
 3.- Eliminar
@@ -26,6 +28,7 @@ NOTA 2: Si el programa vector cambia de tamaño por agregar un nuevo registro al
 NOTA 3: Usar libreria propia
 NOTA 4: archivo.txt es un ejemplo de cómo debe ser el archivo que se genere
 */
+// R.R.D_act12_1_932
 
 #include <stdio.h>
 #include "RRD.h"
@@ -51,14 +54,15 @@ void quicksort(struct Registro registros[], int ri, int rs);
 void ordenarQuickSort(struct Registro registros[], int *num_registros);
 void contar_registros(FILE *fa, char *nombre_archivo);
 void buscar(struct Registro registros[], int *num_registros);
+void copiarArchivo(FILE *fa);
 
 int main()
 {
     struct Registro registros[1500];
-    FILE *archivo, *archivo_borrados;
+    FILE *archivo, *archivo_borrados; //
     archivo_borrados = fopen("archivos_eliminados.txt", "a");
     char nombre_archivo[20];
-    int num_registros = 0, matricula_a_eliminar, encontrado, ordenado = 0, quieres_eliminar;
+    int num_registros = 0, matricula_a_eliminar, encontrado, ordenado = 1, quieres_eliminar;
     int opc, menu;
     do
     {
@@ -72,7 +76,7 @@ int main()
             return 0;
             break;
         case 1:
-
+            copiarArchivo(archivo);
             break;
         case 2:
             crear_registros_automaticos(registros, &num_registros);
@@ -89,6 +93,8 @@ int main()
                 if (quieres_eliminar == 1)
                 {
                     dar_de_baja_registro(registros, &num_registros, matricula_a_eliminar);
+                    imprimir_en_archivo_de_texto_eliminados(registros, num_registros, archivo_borrados);
+                    imprimir_en_archivo_de_texto(registros, num_registros, archivo, nombre_archivo);
                     ordenado = 1;
                 }
             }
@@ -96,34 +102,62 @@ int main()
             break;
 
         case 4:
-            buscar(registros, &num_registros);
-            break;
-        case 5:
-            if (ordenado == 1)
+            if (num_registros > 0)
             {
-                if (num_registros <= 500)
-                {
-                    ordenar(registros, &num_registros);
-                    printf("ORDENADO POR METODO DE BURBUJA\n");
-                }
-                else
-                {
-                    ordenarQuickSort(registros, &num_registros);
-                    printf("ORDENADO POR METODO QUICKSORT\n");
-                }
-                ordenado = 0;
+                buscar(registros, &num_registros);
             }
             else
             {
-                printf("YA ESTA ORDENADO\n");
-                getchar();
+                printf("NO HAY REGISTROS\n");
+            }
+            break;
+        case 5:
+            if (num_registros > 0)
+            {
+                if (ordenado == 1)
+                {
+                    if (num_registros <= 500)
+                    {
+                        ordenar(registros, &num_registros);
+                        printf("ORDENADO POR METODO DE BURBUJA\n");
+                    }
+                    else
+                    {
+                        ordenarQuickSort(registros, &num_registros);
+                        printf("ORDENADO POR METODO QUICKSORT\n");
+                    }
+                    ordenado = 0;
+                }
+                else
+                {
+                    printf("YA ESTA ORDENADO\n");
+                    getchar();
+                }
+            }
+            else
+            {
+                printf("NO HAY REGISTROS\n");
             }
 
             break;
 
         case 6:
-            imprimir_en_la_terminal(registros, num_registros);
-
+            if (ordenado == 0)
+            {
+                printf("ESTAN ORDENADOS\n");
+            }
+            else
+            {
+                printf("ESTAN DESORDENADOS\n");
+            }
+            if (num_registros > 0)
+            {
+                imprimir_en_la_terminal(registros, num_registros);
+            }
+            else
+            {
+                printf("NO HAY REGISTROS\n");
+            }
             break;
         case 7:
             printf("INGRESE EL NOMBRE DEL ARCHIVO\n");
@@ -137,7 +171,6 @@ int main()
             printf("INGRESE EL NOMBRE DEL ARCHIVO\n");
             gets(nombre_archivo);
             strcat(nombre_archivo, ".txt");
-            archivo = fopen(nombre_archivo, "a");
             contar_registros(archivo, nombre_archivo);
             break;
 
@@ -223,7 +256,6 @@ void imprimir_en_la_terminal(struct Registro registros[], int num_registros)
 
             if (acu == 40)
             {
-                printf("Presiona Enter para continuar");
                 getchar();
                 acu = 0;
             }
@@ -248,7 +280,7 @@ void imprimir_en_archivo_de_texto(struct Registro registros[], int num_registros
         fclose(fa);
         return;
     }
-    fprintf(fa, "Registros almacenados:\n");
+    fprintf(fa, "\nRegistros almacenados:\n");
     fprintf(fa, "  No.    Matricula   Nombre                         Apellido Pat.     Apellido Mat.     Edad    Sexo   \n");
 
     for (i = 0; i <= num_registros; i++)
@@ -306,10 +338,10 @@ void imprimir_en_archivo_de_texto_eliminados(struct Registro registros[], int nu
         fclose(fa);
         return;
     }
-    fprintf(fa, "Registros ELIMINADOS:\n");
+    fprintf(fa, "\nRegistros ELIMINADOS:\n");
     fprintf(fa, "  No.    Matricula   Nombre                         Apellido Pat.     Apellido Mat.     Edad    Sexo   \n");
 
-    for (i = 0; i < num_registros; i++)
+    for (i = 0; i <= num_registros; i++)
     {
         if (registros[i].Status == 2)
         {
@@ -404,11 +436,16 @@ void quicksort(struct Registro registros[], int ri, int rs)
 void ordenarQuickSort(struct Registro registros[], int *num_registros)
 {
     quicksort(registros, 0, *num_registros - 1);
-}
+} // fue mi aportacion al codigo jijiji
 void contar_registros(FILE *fa, char *nombre_archivo)
 {
-    int con = -2;
+    int con = -3;
     fa = fopen(nombre_archivo, "r");
+    if (fa == NULL)
+    {
+        printf("El archivo no se pudo abrir o no existe.\n");
+        return;
+    }
     char c;
     while ((c = fgetc(fa)) != EOF)
     {
@@ -418,7 +455,9 @@ void contar_registros(FILE *fa, char *nombre_archivo)
         }
     }
     fclose(fa);
-    printf("Registros del archivo: %d", con);
+    printf("------------------------------\n");
+    printf("Registros del archivo: [  %-4d]\n", con);
+    printf("------------------------------\n");
 }
 void buscar(struct Registro registros[], int *num_registros)
 {
@@ -446,4 +485,37 @@ void buscar(struct Registro registros[], int *num_registros)
     {
         printf("NO SE ENCONTRO LA MATRICULA\n\n");
     }
+}
+void copiarArchivo(FILE *fa)
+{
+    FILE *archivo_origen;
+    char caracter, nombre_externo[30], nombre_destino[30];
+    printf("INGRESE EL NOMBRE DEL ARCHIVO EXTERNO\n");
+    gets(nombre_externo);
+    strcat(nombre_externo, ".txt");
+    archivo_origen = fopen(nombre_externo, "r");
+    if (archivo_origen == NULL)
+    {
+        printf("No se pudo abrir el archivo externo.\n");
+        return;
+    }
+    
+    printf("INGRESE EL NOMBRE DEL ARCHIVO DESTINO\n");
+    gets(nombre_destino);
+    strcat(nombre_destino, ".txt");
+    fa = fopen(nombre_destino, "w");
+    if (fa == NULL)
+    {
+        printf("No se pudo crear o abrir el archivo.\n");
+        fclose(archivo_origen);
+        return;
+    }
+
+    while ((caracter = fgetc(archivo_origen)) != EOF)
+    {
+        fputc(caracter, fa);
+    }
+
+    fclose(archivo_origen);
+    fclose(fa);
 }
